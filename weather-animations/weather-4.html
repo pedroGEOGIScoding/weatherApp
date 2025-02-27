@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Weather Cards with Minimalist Info</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .weather-card {
+            width: 200px;
+            height: 300px;
+            background: #2c2c2c;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .weather-title {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            margin: 0;
+        }
+
+        .weather-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .temperature {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .location {
+            font-size: 16px;
+            margin: 5px 0 0;
+            opacity: 0.9;
+        }
+
+        .weather-details {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1;
+            font-size: 12px; /* Smaller text */
+            opacity: 0.9;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin: 4px 0; /* Slightly reduced margin */
+        }
+
+        .detail-item .icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+        }
+
+        .detail-item span {
+            margin-left: 5px;
+        }
+
+        /* Wind Animation */
+        .wind .cloud {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            background: #888;
+            border-radius: 20px;
+            top: 50px;
+            animation: moveCloud 4s linear infinite;
+        }
+
+        .wind .wind-line {
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: #aaa;
+            opacity: 0.7;
+            animation: windLines 2s infinite;
+        }
+
+        @keyframes moveCloud {
+            0% { left: -60px; }
+            100% { left: 260px; }
+        }
+
+        @keyframes windLines {
+            0% { transform: translateX(-50px); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateX(250px); opacity: 0; }
+        }
+
+        /* Rain Animation */
+        .rain .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: #00b4d8;
+            animation: fall 1s linear infinite;
+        }
+
+        .rain .puddle {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background: #00b4d8;
+            opacity: 0.3;
+            animation: puddle 5s infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px); opacity: 1; }
+            100% { transform: translateY(300px); opacity: 0; }
+        }
+
+        @keyframes puddle {
+            0% { height: 0; }
+            50% { height: 20px; }
+            100% { height: 15px; }
+        }
+
+        /* Sun Animation */
+        .sun .sunshine {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #ffdd00;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+
+        .sun .ray {
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: #ffdd00;
+            opacity: 0.8;
+            transform-origin: left;
+            animation: rayPulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes rayPulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Snow Animation */
+        .snow .snowflake {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: snowFall 3s linear infinite;
+        }
+
+        .snow .snow-ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0;
+            background: white;
+            animation: snowAccumulate 10s infinite;
+        }
+
+        @keyframes snowFall {
+            0% { transform: translateY(-50px); opacity: 1; }
+            100% { transform: translateY(300px); opacity: 0; }
+        }
+
+        @keyframes snowAccumulate {
+            0% { height: 0; }
+            100% { height: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-card wind">
+        <h3 class="weather-title">Wind</h3>
+        <div class="weather-info">
+            <p class="temperature">15°C</p>
+            <p class="location">Chicago, USA</p>
+        </div>
+        <div class="weather-details">
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="12" x2="12" y2="6"/>
+                    <line x1="12" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>Time: 16:30</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 2C9 8 6 12 6 16a6 6 0 0012 0c0-4-3-8-6-14z"/>
+                </svg>
+                <span>Humidity: 15%</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 12h12M12 4l8 8-8 8"/>
+                </svg>
+                <span>Wind: 45 km/h</span>
+            </div>
+        </div>
+    </div>
+    <div class="weather-card rain">
+        <h3 class="weather-title">Rain</h3>
+        <div class="weather-info">
+            <p class="temperature">12°C</p>
+            <p class="location">London, UK</p>
+        </div>
+        <div class="weather-details">
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="12" x2="12" y2="6"/>
+                    <line x1="12" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>Time: 16:30</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 2C9 8 6 12 6 16a6 6 0 0012 0c0-4-3-8-6-14z"/>
+                </svg>
+                <span>Humidity: 80%</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 12h12M12 4l8 8-8 8"/>
+                </svg>
+                <span>Wind: 20 km/h</span>
+            </div>
+        </div>
+    </div>
+    <div class="weather-card sun">
+        <h3 class="weather-title">Sun</h3>
+        <div class="weather-info">
+            <p class="temperature">28°C</p>
+            <p class="location">Miami, USA</p>
+        </div>
+        <div class="weather-details">
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="12" x2="12" y2="6"/>
+                    <line x1="12" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>Time: 16:30</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 2C9 8 6 12 6 16a6 6 0 0012 0c0-4-3-8-6-14z"/>
+                </svg>
+                <span>Humidity: 50%</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 12h12M12 4l8 8-8 8"/>
+                </svg>
+                <span>Wind: 10 km/h</span>
+            </div>
+        </div>
+    </div>
+    <div class="weather-card snow">
+        <h3 class="weather-title">Snow</h3>
+        <div class="weather-info">
+            <p class="temperature">-2°C</p>
+            <p class="location">Oslo, Norway</p>
+        </div>
+        <div class="weather-details">
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="12" x2="12" y2="6"/>
+                    <line x1="12" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>Time: 16:30</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 2C9 8 6 12 6 16a6 6 0 0012 0c0-4-3-8-6-14z"/>
+                </svg>
+                <span>Humidity: 60%</span>
+            </div>
+            <div class="detail-item">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 12h12M12 4l8 8-8 8"/>
+                </svg>
+                <span>Wind: 30 km/h</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to add animated elements dynamically
+        function initWeatherAnimations() {
+            // Wind
+            const windCard = document.querySelector('.wind');
+            windCard.innerHTML += '<div class="cloud"></div>';
+            for (let i = 0; i < 3; i++) {
+                const line = document.createElement('div');
+                line.className = 'wind-line';
+                line.style.top = `${100 + i * 40}px`;
+                line.style.animationDelay = `${i * 0.5}s`;
+                windCard.appendChild(line);
+            }
+
+            // Rain
+            const rainCard = document.querySelector('.rain');
+            rainCard.innerHTML += '<div class="puddle"></div>';
+            for (let i = 0; i < 10; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'raindrop';
+                drop.style.left = `${Math.random() * 100}%`;
+                drop.style.animationDelay = `${Math.random()}s`;
+                rainCard.appendChild(drop);
+            }
+
+            // Sun
+            const sunCard = document.querySelector('.sun');
+            sunCard.innerHTML += '<div class="sunshine"></div>';
+            for (let i = 0; i < 8; i++) {
+                const ray = document.createElement('div');
+                ray.className = 'ray';
+                ray.style.top = '50%';
+                ray.style.left = '50%';
+                ray.style.transform = `rotate(${i * 45}deg) translateX(60px)`;
+                ray.style.animationDelay = `${i * 0.2}s`;
+                sunCard.appendChild(ray);
+            }
+
+            // Snow
+            const snowCard = document.querySelector('.snow');
+            snowCard.innerHTML += '<div class="snow-ground"></div>';
+            for (let i = 0; i < 15; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+                flake.style.left = `${Math.random() * 100}%`;
+                flake.style.animationDelay = `${Math.random() * 2}s`;
+                snowCard.appendChild(flake);
+            }
+        }
+
+        // Initialize animations on page load
+        window.onload = initWeatherAnimations;
+    </script>
+</body>
+</html>

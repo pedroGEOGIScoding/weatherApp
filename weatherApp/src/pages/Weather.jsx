@@ -46,9 +46,9 @@ export default function Weather() {
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetchWeatherData();
-  }, []); // Fetch default data on load if needed
+  }, []);*/ // Fetch default data on load if needed
 
   return (
     <div>

@@ -32,22 +32,26 @@ body {
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  background-color: #DCDCDC;
+  background-color: #ffffff;
+  background-image: url(./public/imageBackground.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
+  line-height: 0.1;/*gap between web top browser and the text*/
 }
-
+/*Search bottom apperance*/
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  padding: 0.6em 1.2em;/*buttom size. The first value */
+  font-size: 1em; /*Fonto size within the buttom. Also change the buttom size*/
+  font-weight: 500; /*Font weight (bold) within the buttom*/
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #3a0707;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -58,15 +62,15 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
+/*Input box appearance*/
 input {
-  border-radius: 8px;
+  border-radius: 8px;/*corners round*/
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #rgb(238, 236, 236)
+  background-color: rgb(238, 236, 236);
   cursor: pointer;
 
 }
@@ -80,6 +84,6 @@ input {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #0b8eaf;/*color of the buttom*/
   }
 }

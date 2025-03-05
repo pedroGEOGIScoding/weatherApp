@@ -3,11 +3,11 @@ import axios from "axios";
 
 const containerStyle = {
   width: "100%",
-  margin: "50px auto", // Adds 50px margin to the top and centers horizontally
+  margin: "50px auto", // Controls the gap between blocks Adds 50px margin to the top and centers horizontally
   padding: "20px",
   border: "1px solid #ccc",
   borderRadius: "8px",
-  boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+  boxShadow: "0 2px 50px rgba(0, 0, 0, 0.1)",
   backgroundColor: "#f9f9f9",
 };
 
@@ -52,11 +52,11 @@ export default function Weather() {
 
   return (
     <div>
-      <h1>Weather Tracker</h1>
+      <h1>The Weather Tracking Co.</h1>
       <div>
         <input
           type="text"
-          placeholder="Enter city"
+          placeholder="Enter city or location name"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />{" "}
@@ -80,7 +80,7 @@ export default function Weather() {
       )}
       {forecast.length > 0 && (
         <div style={containerStyle}>
-          <h2>5-Day Forecast</h2>
+          <h2>5-Day Weather Forecast</h2>
           {forecast.map((day, index) => (
             <div key={index}>
               <p>Date: {new Date(day.dt_txt).toLocaleDateString()}</p>

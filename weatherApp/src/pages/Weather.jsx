@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const containerStyle = {
@@ -39,6 +39,7 @@ export default function Weather() {
         forecastResponse.data.list.filter((_, index) => index % 8 === 0)
       );
         console.log(forecastResponse);
+    // eslint-disable-next-line no-unused-vars
     } catch (err) {
       setError("Failed to fetch weather data. Please try again.");
     } finally {

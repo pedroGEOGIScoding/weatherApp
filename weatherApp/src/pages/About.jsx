@@ -1,4 +1,4 @@
-function About() {
+export default function About() {
   return (
     <div>
       <h1>About Weather App</h1>
@@ -6,5 +6,3 @@ function About() {
     </div>
   );
 }
-
-export default About;

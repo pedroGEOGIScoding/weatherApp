@@ -1,9 +1,4 @@
-function Weather() {
-  // Implement weather search functionality here
-  return <h1>Weather Search</h1>;
-}
 
-// src/pages/Map.js
 import { MapContainer, TileLayer } from 'react-leaflet';
 
 function Map() {

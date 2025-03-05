@@ -33,7 +33,7 @@ body {
   font-weight: 400;
   color-scheme: light dark;
   background-color: #ffffff;
-  background-image: url(./public/imageBackground.jpg);
+  background-image: url(./imageBackground.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
